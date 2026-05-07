@@ -1,0 +1,30 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "DenySpecificServices",
+      "Effect": "Deny",
+      "Action": [
+        "q:*",
+        "acm-pca:*",
+        "route53:CreateHostedZone",
+        "route53domains:*",
+        "redshift-serverless:*",
+        "aws-marketplace:*",
+        "macie2:*",
+        "redshift-data:*",
+        "redshift:*",
+        "quicksight:*",
+        "sagemaker:*",
+        "inspector:*",
+        "inspector2:*",
+        "aws-portal:*",
+        "budgets:*",
+        "ce:*",
+        "billing:*",
+        "workspaces:*"
+      ],
+      "Resource": "*"
+    }
+  ]
+}

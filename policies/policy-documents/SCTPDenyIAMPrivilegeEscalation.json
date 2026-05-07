@@ -1,0 +1,20 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "DenyIAMPrivilegeEscalation",
+            "Effect": "Deny",
+            "Action": [
+                "iam:CreateGroup",
+                "iam:AttachGroupPolicy",
+                "iam:PutUserPolicy",
+                "iam:DeleteUserPolicy",
+                "iam:AttachUserPolicy",
+                "iam:DetachGroupPolicy",
+                "iam:DetachUserPolicy",
+                "iam:CreateUser"
+            ],
+            "Resource": "*"
+        }
+    ]
+}

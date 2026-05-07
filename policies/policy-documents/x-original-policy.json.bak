@@ -1,0 +1,125 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "DenyIAMChanges",
+            "Effect": "Deny",
+            "Action": [
+                "iam:CreateGroup",
+                "iam:AttachGroupPolicy",
+                "iam:PutUserPolicy",
+                "iam:DeleteUserPolicy",
+                "iam:AttachUserPolicy",
+                "iam:DetachGroupPolicy",
+                "iam:DetachUserPolicy",
+                "iam:CreateUser"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "DenyAllEC2ExceptT2Micro",
+            "Effect": "Deny",
+            "Action": "ec2:*",
+            "Resource": "*",
+            "Condition": {
+                "ForAnyValue:StringNotLike": {
+                    "ec2:InstanceType": [
+                        "t2.micro",
+                        "t3.micro",
+                        "t3.medium"
+                    ]
+                }
+            }
+        },
+        {
+            "Sid": "DenySpecificServices",
+            "Effect": "Deny",
+            "Action": [
+                "q:*",
+                "acm-pca:*",
+                "route53:CreateHostedZone",
+                "route53domains:*",
+                "redshift-serverless:*",
+                "aws-marketplace:*",
+                "macie2:*",
+                "redshift-data:*",
+                "redshift:*",
+                "quicksight:*",
+                "sagemaker:*",
+                "inspector:*",
+                "inspector2:*",
+                "aws-portal:*",
+                "budgets:*",
+                "ce:*",
+                "billing:*",
+                "workspaces:*"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "DenyActionsOutsideSpecificRegions",
+            "Effect": "Deny",
+            "Action": "*",
+            "Resource": "*",
+            "Condition": {
+                "StringNotEquals": {
+                    "aws:RequestedRegion": [
+                        "us-east-1",
+                        "us-east-2",
+                        "ap-southeast-1"
+                    ]
+                }
+            }
+        },
+        {
+            "Sid": "AllowEC2OperationsForT2Micro",
+            "Effect": "Allow",
+            "Action": [
+                "ec2:RunInstances",
+                "ec2:DescribeInstances",
+                "ec2:DescribeInstanceStatus",
+                "ec2:DescribeInstanceTypeOfferings"
+            ],
+            "Resource": [
+                "arn:aws:ec2:*:*:instance/*",
+                "arn:aws:ec2:*:*:key-pair/*",
+                "arn:aws:ec2:*:*:network-interface/*",
+                "arn:aws:ec2:*:*:security-group/*",
+                "arn:aws:ec2:*:*:subnet/*",
+                "arn:aws:ec2:*:*:volume/*",
+                "arn:aws:ec2:*:*:vpc/*",
+                "arn:aws:ec2:*:*:image/*"
+            ],
+            "Condition": {
+                "StringEquals": {
+                    "ec2:InstanceType": "t2.micro,t3.medium"
+                }
+            }
+        },
+        {
+            "Sid": "AllowNonIAMActionsInSpecificRegions",
+            "Effect": "Allow",
+            "NotAction": [
+                "iam:*",
+                "organizations:*",
+                "account:*",
+                "iam:CreateServiceLinkedRole",
+                "iam:DeleteServiceLinkedRole",
+                "iam:ListRoles",
+                "organizations:DescribeOrganization",
+                "account:ListRegions",
+                "s3:*"
+            ],
+            "Resource": "*",
+            "Condition": {
+                "StringEquals": {
+                    "aws:RequestedRegion": [
+                        "us-east-1",
+                        "us-east-2",
+                        "ap-southeast-1"
+                    ]
+                }
+            }
+        }
+    ]
+}

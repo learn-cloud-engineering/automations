@@ -1,0 +1,16 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "OnlyAllowSpecificInstanceTypes",
+      "Effect": "Deny",
+      "Action": "ec2:*",
+      "Resource": "*",
+      "Condition": {
+        "ForAnyValue:StringNotLike": {
+          "ec2:InstanceType": ["t2.micro", "t3.micro", "t3.small", "t3.medium"]
+        }
+      }
+    }
+  ]
+}
