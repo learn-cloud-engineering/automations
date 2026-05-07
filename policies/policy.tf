@@ -9,8 +9,4 @@ resource "aws_iam_policy" "policies" {
   description = "Managed policy generated from ${each.value}"
 
   policy = file("${path.module}/${each.value}")
-
-  tags = {
-    Owner = "SCTP"
-  }
 }
