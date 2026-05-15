@@ -7,4 +7,7 @@ variable "cohort_code" {
   }
 }
 
-variable "usernames" { type = list(string) }
+variable "student_file" {
+  type        = string
+  description = "Path to a text file containing student usernames, one on each line."
+}

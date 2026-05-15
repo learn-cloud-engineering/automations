@@ -1,6 +1,7 @@
 locals {
   cohort_name = "sctp-${var.cohort_code}-learners"
-  usernames   = [for name in var.usernames : "${name}-${var.cohort_code}"]
+  students    = compact(split("\n", replace(trimspace(file(var.student_file)), "\r", "")))
+  usernames   = [for name in local.students : "${name}-${var.cohort_code}"]
 }
 
 resource "aws_iam_group" "cohort" {
