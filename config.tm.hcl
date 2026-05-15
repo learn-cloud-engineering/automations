@@ -1,6 +1,7 @@
 globals {
-  region = "ap-southeast-1"
-  source_url = "https://github.com/jsstrn/learn-cloud-engineering"
+  source_url  = "https://github.com/learn-cloud-engineering/automations"
+  region_tags = [for t in terramate.stack.tags : t if tm_startswith(t, "region/")]
+  region      = tm_length(global.region_tags) > 0 ? tm_split("/", global.region_tags[0])[1] : "ap-southeast-1"
 }
 
 generate_hcl "versions.tf" {

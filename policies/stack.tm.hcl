@@ -4,5 +4,6 @@ stack {
   description = "Policies"
   tags = [
     "policies",
+    "region/ap-southeast-1"
   ]
 }

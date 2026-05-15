@@ -6,7 +6,7 @@ provider "aws" {
     tags = {
       ManagedBy = "Terraform"
       Owner     = "SCTP"
-      Source    = "https://github.com/jsstrn/learn-cloud-engineering"
+      Source    = "https://github.com/learn-cloud-engineering/automations"
     }
   }
 }
