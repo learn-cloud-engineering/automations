@@ -1,7 +1,5 @@
 locals {
   cohort_name = "sctp-${var.cohort_code}-learners"
-  students    = compact(split("\n", replace(trimspace(file(var.student_file)), "\r", "")))
-  usernames   = [for name in local.students : "${name}-${var.cohort_code}"]
 }
 
 resource "aws_iam_group" "cohort" {
@@ -10,8 +8,8 @@ resource "aws_iam_group" "cohort" {
 }
 
 resource "aws_iam_user" "students" {
-  for_each = toset(local.usernames)
-  name     = each.value
+  for_each = { for s in var.students : s.aws_username => s }
+  name     = "${each.value.aws_username}-${var.cohort_code}"
   path     = "/students/"
 
   tags = {
@@ -20,7 +18,7 @@ resource "aws_iam_user" "students" {
 }
 
 resource "aws_iam_user_group_membership" "add_students" {
-  for_each = toset(local.usernames)
-  user     = aws_iam_user.students[each.value].name
+  for_each = aws_iam_user.students
+  user     = each.value.name
   groups   = [aws_iam_group.cohort.name]
 }

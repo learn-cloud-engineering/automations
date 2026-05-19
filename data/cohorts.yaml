@@ -1,0 +1,10 @@
+cohorts:
+  - code: ce99
+    name: "Cohort 99"
+    status: active
+    region: us-east-1
+    students:
+      - name: "John Doe"
+        aws_username: johndoe
+        github_username: johndoe
+        discord_username: "johndoe#1234"

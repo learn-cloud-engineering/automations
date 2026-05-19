@@ -1,7 +1,11 @@
 globals {
-  source_url  = "https://github.com/learn-cloud-engineering/automations"
+  hostname      = "learn-cloud-engineering"
+  orgnanization = "learn-cloud-engineering"
+
   region_tags = [for t in terramate.stack.tags : t if tm_startswith(t, "region/")]
   region      = tm_length(global.region_tags) > 0 ? tm_split("/", global.region_tags[0])[1] : "ap-southeast-1"
+
+  source_url = "https://github.com/learn-cloud-engineering/automations"
 }
 
 generate_hcl "versions.tf" {
@@ -28,6 +32,21 @@ generate_hcl "providers.tf" {
           ManagedBy = "Terraform"
           Owner     = "SCTP"
           Source    = global.source_url
+        }
+      }
+    }
+  }
+}
+
+generate_hcl "backend.tf" {
+  content {
+    terraform {
+      cloud {
+        hostname     = "<your-account-name>.scalr.io"
+        organization = "<your-environment-id>"
+
+        workspaces {
+          name = tm_replace(terramate.stack.path.relative, "/", "-")
         }
       }
     }
