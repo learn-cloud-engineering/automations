@@ -2,12 +2,14 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "type": "object",
   "required": ["cohorts"],
+  "additionalProperties": false,
   "properties": {
     "cohorts": {
       "type": "array",
       "items": {
         "type": "object",
         "required": ["code", "name", "status", "region", "students"],
+        "additionalProperties": false,
         "properties": {
           "code": {
             "type": "string",
@@ -33,6 +35,7 @@
             "items": {
               "type": "object",
               "required": ["name", "aws_username"],
+              "additionalProperties": false,
               "properties": {
                 "name": {
                   "type": "string",
