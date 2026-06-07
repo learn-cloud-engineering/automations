@@ -57,30 +57,35 @@ create-admin-stack name:
 
 alias create-admin := create-admin-stack
 
-# Run terraform command for a stack, e.g. just terraform apply stack=cohorts
+# Use terramate to run terraform command for a stack
 [group('stacks')]
-terraform command stack:
-  echo "Running terraform {{command}} for the {{stack}} stack"
+terramate-run-terraform command stack:
+  just validate-data
+  echo "Use terramate to run terraform {{command}} for the {{stack}} stack"
   terramate run --tags=admin/{{stack}} -- terraform {{command}}
 
-alias tf := terraform
+alias tm := terramate-run-terraform
 
 [group('cohorts')]
+[working-directory: 'admin/cohorts']
 cohorts-init:
   just validate-data
-  just terraform init cohorts
+  terraform init
 
 [group('cohorts')]
+[working-directory: 'admin/cohorts']
 cohorts-validate:
   just validate-data
-  just terraform validate cohorts
+  terraform validate
 
 [group('cohorts')]
+[working-directory: 'admin/cohorts']
 cohorts-plan:
   just validate-data
-  just terraform plan cohorts
+  terraform plan
 
 [group('cohorts')]
+[working-directory: 'admin/cohorts']
 cohorts-apply:
   just validate-data
-  just terraform apply cohorts
+  terraform apply
