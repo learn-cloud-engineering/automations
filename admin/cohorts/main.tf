@@ -11,5 +11,6 @@ module "cohort" {
   source      = "../../modules/cohort"
   cohort_code = each.value.code
   cohort_name = each.value.name
+  region      = each.value.region
   students    = each.value.students
 }
