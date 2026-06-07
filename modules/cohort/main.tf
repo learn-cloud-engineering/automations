@@ -1,16 +1,17 @@
 locals {
-  cohort_name = "sctp-${var.cohort_code}-learners"
+  cohort_name = "sctp-cloud-${var.cohort_code}"
+  path        = "/students/${var.cohort_code}/"
 }
 
 resource "aws_iam_group" "cohort" {
   name = local.cohort_name
-  path = "/students/"
+  path = local.path
 }
 
 resource "aws_iam_user" "students" {
   for_each = { for s in var.students : s.aws_username => s }
-  name     = "${each.value.aws_username}-${var.cohort_code}"
-  path     = "/students/"
+  name     = each.value.aws_username
+  path     = local.path
 
   tags = {
     Cohort = local.cohort_name
