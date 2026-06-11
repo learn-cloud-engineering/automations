@@ -26,8 +26,8 @@ generate_hcl "providers.tf" {
 
       default_tags {
         tags = {
-          Owner     = "SCTP"
-          Source    = global.source_url
+          Owner  = "SCTP"
+          Source = global.source_url
         }
       }
     }
