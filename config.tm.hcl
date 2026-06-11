@@ -37,18 +37,3 @@ generate_hcl "providers.tf" {
     }
   }
 }
-
-# generate_hcl "backend.tf" {
-#   content {
-#     terraform {
-#       cloud {
-#         hostname     = "<your-account-name>.scalr.io"
-#         organization = "<your-environment-id>"
-
-#         workspaces {
-#           name = tm_replace(terramate.stack.path.relative, "/", "-")
-#         }
-#       }
-#     }
-#   }
-# }
