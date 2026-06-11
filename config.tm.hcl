@@ -26,7 +26,6 @@ generate_hcl "providers.tf" {
 
       default_tags {
         tags = {
-          ManagedBy = "Scalr.io"
           Owner     = "SCTP"
           Source    = global.source_url
         }
