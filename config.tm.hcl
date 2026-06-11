@@ -1,11 +1,8 @@
 globals {
-  hostname      = "learn-cloud-engineering"
-  orgnanization = "learn-cloud-engineering"
-
   region_tags = [for t in terramate.stack.tags : t if tm_startswith(t, "region/")]
   region      = tm_length(global.region_tags) > 0 ? tm_split("/", global.region_tags[0])[1] : "ap-southeast-1"
 
-  source_url = "https://github.com/learn-cloud-engineering/automations"
+  source_url = "https://github.com/su-ntu-ctp/cloud-cohorts"
 }
 
 generate_hcl "versions.tf" {
@@ -29,7 +26,7 @@ generate_hcl "providers.tf" {
 
       default_tags {
         tags = {
-          ManagedBy = "Terraform"
+          ManagedBy = "Scalr.io"
           Owner     = "SCTP"
           Source    = global.source_url
         }
