@@ -11,9 +11,10 @@ resource "aws_iam_group" "cohort" {
 }
 
 resource "aws_iam_user" "students" {
-  for_each = { for s in local.students : s.aws_username => s }
-  name     = each.value.aws_username
-  path     = local.path
+  for_each      = { for s in local.students : s.aws_username => s }
+  name          = each.value.aws_username
+  path          = local.path
+  force_destroy = true
 
   tags = {
     Cohort = local.cohort_name
