@@ -1,9 +1,9 @@
 # yaml-language-server: $schema=./schema.json
 
 cohorts:
-  - code: ce88
-    name: "Cohort 88"
-    status: inactive
+  - code: ce77
+    name: "Cohort 77"
+    status: active
     region: ap-southeast-1
     students:
       - name: "Adam Smith"
@@ -11,9 +11,9 @@ cohorts:
       - name: "Bob Marley"
         aws_username: bobmarley
 
-  - code: ce99
-    name: "Cohort 99"
-    status: inactive
+  - code: ce98
+    name: "Cohort 98"
+    status: active
     region: us-east-1
     students:
       - name: "John Doe"
