@@ -1,22 +1,92 @@
 # yaml-language-server: $schema=./schema.json
 
 cohorts:
-  - code: ce77
-    name: "Cohort 77"
-    status: active
-    region: ap-southeast-1
-    students:
-      - name: "Adam Smith"
-        aws_username: adamsmith
-      - name: "Bob Marley"
-        aws_username: bobmarley
-
-  - code: ce98
-    name: "Cohort 98"
+  - code: ce13
+    name: "Cohort 13"
     status: active
     region: us-east-1
     students:
-      - name: "John Doe"
-        aws_username: johndoe
-      - name: "Jane Doe"
-        aws_username: janedoe
+      - name: "Aisakani"
+        aws_username: "kaniaisa"
+        github_username: "kaniaisa"
+        discord_username: "aisakani"
+      - name: "Boddu Shilpa"
+        aws_username: "shil5ram"
+        github_username: "shil5ram"
+        discord_username: "shilpa0001"
+      - name: "Chen Jianyu"
+        aws_username: "jefferychenjy"
+        github_username: "jefferychenjy"
+        discord_username: "Jeffery_chenjy"
+      - name: "Chia Tong Hwee"
+        aws_username: "JoyLearn"
+        github_username: "JoyLearn"
+        discord_username: "wendyce13"
+      - name: "Jazlyn Chew Yu Ting"
+        aws_username: "jazlyncyt"
+        github_username: "jazlyncyt"
+        discord_username: "jazlyncyt"
+      - name: "Kaandeepan Rajandran"
+        aws_username: "Kaandeepan1"
+        github_username: "Kaandeepan1"
+        discord_username: "kaandeepan_74093"
+      - name: "Lee Kean Hin"
+        aws_username: "kealeee"
+        github_username: "kealeee"
+        discord_username: "keanhin"
+      - name: "Lee Sek Kit"
+        aws_username: "jacksonlskit"
+        github_username: "jacksonlskit"
+        discord_username: "jacklee_ce13"
+      - name: "Mohamed Zeyaulhaq Bin Syed Mohamed"
+        aws_username: "zeyaulhaq"
+        github_username: "zeyaulhaq"
+        discord_username: "zeyaulhaq"
+      - name: "Ong Kit Boo, Alex"
+        aws_username: "alexongmac"
+        github_username: "alexongmac"
+        discord_username: "alexongmac"
+      - name: "Palavesam Krishnaveni"
+        aws_username: "Krishnaveni-CE13"
+        github_username: "Krishnaveni-CE13"
+        discord_username: "krishnap291185"
+      - name: "Paul Yap Soon Loong"
+        aws_username: "paulyapsl"
+        github_username: "paulyapsl"
+        discord_username: "paulyap__"
+      - name: "Peh Tee Kong"
+        aws_username: "peh3"
+        github_username: "peh3"
+        discord_username: "tk020564"
+      - name: "Quah Kai Xin"
+        aws_username: "tagitables"
+        github_username: "tagitables"
+        discord_username: "tagitables"
+      - name: "Tan Cheng Su"
+        aws_username: "plainjon"
+        github_username: "plainjon"
+        discord_username: "kreatif_jon"
+      - name: "Wong Yujun"
+        aws_username: "eugenewongyj"
+        github_username: "eugenewongyj"
+        discord_username: "neanderthalll"
+      - name: "Yeo Kuo Hong"
+        aws_username: "DailyWalk"
+        github_username: "DailyWalk"
+        discord_username: "dailywalk_kh"
+      - name: "Yeoh Ying Qi"
+        aws_username: "yqyeoh"
+        github_username: "yqyeoh"
+        discord_username: "yq8781"
+  
+  - code: ce99
+    name: "Cohort 99"
+    status: active
+    region: us-east-1
+    students:
+      - name: "Adam Smith"
+        aws_username: adamsmith
+        github_username: adamsmith
+      - name: "Bob Marley"
+        aws_username: bobmarley
+        github_username: bobmarley
