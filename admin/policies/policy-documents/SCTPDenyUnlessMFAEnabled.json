@@ -1,22 +1,50 @@
 {
-    "Version": "2012-10-17",
+    "Version":"2012-10-17",
     "Statement": [
         {
-            "Sid": "DenyUnlessMFAEnabled",
+            "Sid": "AllowViewAccountInfo",
+            "Effect": "Allow",
+            "Action": "iam:ListVirtualMFADevices",
+            "Resource": "*"
+        },
+        {
+            "Sid": "AllowManageOwnVirtualMFADevice",
+            "Effect": "Allow",
+            "Action": [
+                "iam:CreateVirtualMFADevice"
+            ],
+            "Resource": "arn:aws:iam::*:mfa/*"
+        },
+        {
+            "Sid": "AllowManageOwnUserMFA",
+            "Effect": "Allow",
+            "Action": [
+                "iam:DeactivateMFADevice",
+                "iam:EnableMFADevice",
+                "iam:GetUser",
+                "iam:GetMFADevice",
+                "iam:ListMFADevices",
+                "iam:ResyncMFADevice"
+            ],
+            "Resource": "arn:aws:iam::*:user/${aws:username}"
+        },
+        {
+            "Sid": "DenyAllExceptListedUnlessMFA",
             "Effect": "Deny",
-            "NotAction": [
+            "NotAction": [ 
+                "iam:GetUser",
+                "iam:ChangePassword",
+                "iam:GetAccountPasswordPolicy",
                 "iam:CreateVirtualMFADevice",
                 "iam:EnableMFADevice",
                 "iam:ListMFADevices",
                 "iam:ListVirtualMFADevices",
-                "iam:GetUser",
-                "iam:ChangePassword"
+                "iam:ResyncMFADevice",
+                "sts:GetSessionToken"
             ],
             "Resource": "*",
             "Condition": {
-                "BoolIfExists": {
-                    "aws:MultiFactorAuthPresent": "false"
-                }
+                "BoolIfExists": {"aws:MultiFactorAuthPresent": "false"}
             }
         }
     ]
