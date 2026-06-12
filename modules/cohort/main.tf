@@ -17,8 +17,9 @@ resource "aws_iam_user" "students" {
   force_destroy = true
 
   tags = {
-    Cohort = local.cohort_name
-    Region = local.region
+    Cohort      = local.cohort_name
+    Region      = local.region
+    StudentName = each.value.name
   }
 }
 
