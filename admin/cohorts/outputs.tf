@@ -1,4 +1,6 @@
 output "cohort_students" {
-  value     = merge([for c in module.cohort : c.students]...)
+  value = {
+    for code, cohort in module.cohort : code => cohort.students
+  }
   sensitive = true
 }
