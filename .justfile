@@ -1,11 +1,14 @@
+# Use tofu instead of terraform
+tf := "tofu"
+
 # Usage: just
 default:
   just --list --unsorted
 
 # Check dependencies
 dependencies:
-  type terraform
-  terraform -version
+  type {{tf}}
+  {{tf}} -version
   type terramate
   terramate version
   type pipx
@@ -18,7 +21,7 @@ alias depend := dependencies
 [group('format')]
 format:
   terramate fmt
-  terraform fmt -recursive
+  {{tf}} fmt -recursive
 
 alias fmt := format
 alias lint := format
@@ -59,33 +62,35 @@ alias create-admin := create-admin-stack
 
 # Use terramate to run terraform command for a stack
 [group('stacks')]
-terramate-run-terraform command stack:
+terramate-run-tofu command stack:
   just validate-data
-  echo "Use terramate to run terraform {{command}} for the {{stack}} stack"
-  terramate run --tags=admin/{{stack}} -- terraform {{command}}
+  echo "Use terramate to run {{tf}} {{command}} for the {{stack}} stack"
+  terramate run --tags=admin/{{stack}} -- {{tf}} {{command}}
 
-alias tm := terramate-run-terraform
+alias terramate-run-terraform := terramate-run-tofu
+alias terramate-run := terramate-run-tofu
+alias tm := terramate-run-tofu
 
 [group('cohorts')]
 [working-directory: 'admin/cohorts']
 cohorts-init:
   just validate-data
-  terraform init
+  {{tf}} init
 
 [group('cohorts')]
 [working-directory: 'admin/cohorts']
 cohorts-validate:
   just validate-data
-  terraform validate
+  {{tf}} validate
 
 [group('cohorts')]
 [working-directory: 'admin/cohorts']
 cohorts-plan:
   just validate-data
-  terraform plan
+  {{tf}} plan
 
 [group('cohorts')]
 [working-directory: 'admin/cohorts']
 cohorts-apply:
   just validate-data
-  terraform apply
+  {{tf}} apply
