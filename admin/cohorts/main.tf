@@ -21,5 +21,11 @@ module "cohort" {
   cohort_name = each.value.name
   region      = each.value.region
   students    = each.value.students
-  policy_arns = values(data.aws_iam_policy.student_policies)[*].arn
+  policy_arns = concat(
+    values(data.aws_iam_policy.student_policies)[*].arn,
+    [
+      data.aws_iam_policy.administrator_access.arn,
+      data.aws_iam_policy.iam_user_change_password.arn,
+    ],
+  )
 }
