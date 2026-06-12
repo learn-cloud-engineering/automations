@@ -17,7 +17,7 @@ def convert(csv_path):
     with open(csv_path) as f:
         reader = csv.DictReader(f)
         for row in reader:
-            name = row["Full Name"].strip()
+            name = row["Full Name"].strip().replace(",", "")
             github = row["GitHub Username"].strip()
             discord = row["Discord Username"].strip()
             print(f'      - name: "{name}"')

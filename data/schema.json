@@ -39,7 +39,8 @@
               "properties": {
                 "name": {
                   "type": "string",
-                  "description": "Student's full name"
+                  "pattern": "^[\\w\\s.:\\/=+\\-@]*$",
+                  "description": "Student's full name. Must match AWS tag charset — no commas."
                 },
                 "aws_username": {
                   "type": "string",
