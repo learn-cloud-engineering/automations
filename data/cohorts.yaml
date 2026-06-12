@@ -3,7 +3,7 @@
 cohorts:
   - code: ce88
     name: "Cohort 88"
-    status: inactive
+    status: active
     region: ap-southeast-1
     students:
       - name: "Adam Smith"
