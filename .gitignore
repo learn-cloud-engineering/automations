@@ -1,6 +1,9 @@
 # Local backend configuration file
 local.tf
 
+# Ignore local Terraform lock files
+.terraform.lock.hcl
+
 # Local .terraform directories
 .terraform/
 
