@@ -2,12 +2,6 @@
 
 Terraform + Terramate project for managing cohort student resources.
 
-## Tasks
-
-- [ ] Verify GitHub usernames exist with `curl -I -X HEAD https://api.github.com/users/{{username}}`
-- [ ] Test creating a cohort with students. 
-- [ ] Test destroying a cohort with students by changing status to inactive.
-- [ ] Test destroying a cohort with students by removing them from data/cohorts.yaml.
 
 ## Architecture
 
