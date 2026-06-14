@@ -1,5 +1,5 @@
 # Use tofu instead of terraform
-tf := "tofu"
+tfcmd := "tofu"
 
 # Usage: just
 default:
@@ -7,12 +7,12 @@ default:
 
 # Check dependencies
 dependencies:
-  type {{tf}}
-  {{tf}} -version
-  type terramate
-  terramate version
-  type pipx
-  pipx --version
+  @type {{tfcmd}}
+  @{{tfcmd}} -version
+  @type terramate
+  @terramate version
+  @type pipx
+  @pipx --version
 
 alias dep := dependencies
 alias depend := dependencies
@@ -21,24 +21,26 @@ alias depend := dependencies
 [group('format')]
 format:
   terramate fmt
-  {{tf}} fmt -recursive
+  {{tfcmd}} fmt -recursive
 
 alias fmt := format
 alias lint := format
 
 # Validate cohorts.yaml against schema
 [group('format')]
-validate-data:
-  just format
-  pipx run check-jsonschema --schemafile data/schema.json data/cohorts.yaml
+[working-directory: 'data']
+validate: format
+  pipx run check-jsonschema --schemafile schema.json cohorts.yaml
 
-alias check-data := validate-data
-alias check-schema := validate-data
-alias validate-schema := validate-data
+alias valid := validate
+alias check-data := validate
+alias check-schema := validate
+alias validate-data := validate
+alias validate-schema := validate
 
 # Generate templates for all stacks
 [group('stacks')]
-generate:
+generate: validate
   terramate generate
 
 alias gen := generate
@@ -54,43 +56,34 @@ alias list-stacks := list-all-stacks
 
 # Example usage: just create-admin-stack policies
 [group('stacks')]
-create-admin-stack name:
+create-stack name:
   terramate create admin/{{name}} \
     --tags "admin/{{name}}"
-
-alias create-admin := create-admin-stack
 
 # Use terramate to run terraform command for a stack
 [group('stacks')]
 terramate-run-tofu command stack:
-  just validate-data
-  echo "Use terramate to run {{tf}} {{command}} for the {{stack}} stack"
-  terramate run --tags=admin/{{stack}} -- {{tf}} {{command}}
+  @echo "Use terramate to run {{tfcmd}} {{command}} for the {{stack}} stack"
+  terramate run --tags=admin/{{stack}} -- {{tfcmd}} {{command}}
 
 alias terramate-run-terraform := terramate-run-tofu
 alias terramate-run := terramate-run-tofu
 alias tm := terramate-run-tofu
 
-[group('cohorts')]
-[working-directory: 'admin/cohorts']
-cohorts-init:
-  just validate-data
-  {{tf}} init
+[group('stacks')]
+run-tofu-command command stack:
+  {{tfcmd}} -chdir=admin/{{stack}} {{command}}
+
+alias terraform := run-tofu-command
+alias tofu := run-tofu-command
+alias tf := run-tofu-command
 
 [group('cohorts')]
 [working-directory: 'admin/cohorts']
-cohorts-validate:
-  just validate-data
-  {{tf}} validate
+view-outputs-for-cohorts:
+  {{tfcmd}} output -json
 
 [group('cohorts')]
 [working-directory: 'admin/cohorts']
-cohorts-plan:
-  just validate-data
-  {{tf}} plan
-
-[group('cohorts')]
-[working-directory: 'admin/cohorts']
-cohorts-apply:
-  just validate-data
-  {{tf}} apply
+student-info query:
+  just view-outputs-for-cohorts | jq -r --arg q "{{query}}" '.cohort_students.value | to_entries[] | .value | to_entries[] | select(.key == $q or .value.name == $q) | "Name:       \(.value.name)", "Username:   \(.key)", "Password:   \(.value.password)", "Login URL:  \(.value.login_url)"'
