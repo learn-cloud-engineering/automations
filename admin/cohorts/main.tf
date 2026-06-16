@@ -1,17 +1,10 @@
 locals {
   all_cohorts = yamldecode(file("${path.module}/../../data/cohorts.yaml"))
+  
   active_cohorts = {
     for c in local.all_cohorts.cohorts : c.code => c
     if c.status == "active"
   }
-
-  policy_files = fileset("${path.module}/../../admin/policies/policy-documents/", "*.json")
-  policy_names = [for f in local.policy_files : trimsuffix(f, ".json")]
-}
-
-data "aws_iam_policy" "student_policies" {
-  for_each = toset(local.policy_names)
-  name     = each.value
 }
 
 module "cohort" {
@@ -24,11 +17,19 @@ module "cohort" {
 
   students = each.value.students
 
-  policy_arns = concat(
-    values(data.aws_iam_policy.student_policies)[*].arn,
-    [
-      data.aws_iam_policy.administrator_access.arn,
-      data.aws_iam_policy.iam_user_change_password.arn,
-    ],
-  )
+  policy_arns = [
+    # AWS Managed Policies
+    data.aws_iam_policy.administrator_access.arn,
+    data.aws_iam_policy.iam_user_change_password.arn,
+    
+    # Customer Managed Policies
+    data.aws_iam_policy.allow_ec2_operations_for_instance_types.arn,
+    data.aws_iam_policy.allow_non_iam_actions_in_specific_regions.arn,
+    data.aws_iam_policy.deny_actions_outside_specific_regions.arn,
+    data.aws_iam_policy.deny_delete_cohort_vpc.arn,
+    data.aws_iam_policy.deny_iam_privilege_escalation.arn,
+    data.aws_iam_policy.deny_specific_services.arn,
+    data.aws_iam_policy.original_learners_policy.arn,
+    data.aws_iam_policy.restrict_instance_types.arn,
+  ]
 }
