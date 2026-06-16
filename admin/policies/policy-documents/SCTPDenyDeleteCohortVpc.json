@@ -1,0 +1,26 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "DenyDeleteCohortVpc",
+      "Effect": "Deny",
+      "Action": [
+        "ec2:DeleteVpc",
+        "ec2:DeleteSubnet",
+        "ec2:DeleteInternetGateway",
+        "ec2:DeleteNatGateway",
+        "ec2:DeleteRouteTable",
+        "ec2:DeleteNetworkAcl",
+        "ec2:DeleteVpcEndpoints",
+        "ec2:DetachInternetGateway",
+        "ec2:DisassociateRouteTable"
+      ],
+      "Resource": "*",
+      "Condition": {
+        "StringLike": {
+          "aws:ResourceTag/Cohort": "sctp-cloud-*"
+        }
+      }
+    }
+  ]
+}

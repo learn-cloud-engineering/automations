@@ -15,12 +15,15 @@ data "aws_iam_policy" "student_policies" {
 }
 
 module "cohort" {
-  for_each    = local.active_cohorts
-  source      = "../../modules/cohort"
+  source   = "../../modules/cohort"
+  for_each = local.active_cohorts
+
   cohort_code = each.value.code
   cohort_name = each.value.name
   region      = each.value.region
-  students    = each.value.students
+
+  students = each.value.students
+
   policy_arns = concat(
     values(data.aws_iam_policy.student_policies)[*].arn,
     [
