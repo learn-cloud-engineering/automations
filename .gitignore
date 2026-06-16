@@ -1,5 +1,6 @@
 # Local backend configuration file
 local.tf
+students.json
 
 # Ignore local Terraform lock files
 .terraform.lock.hcl
