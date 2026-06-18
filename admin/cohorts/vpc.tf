@@ -4,6 +4,7 @@ module "vpc" {
   for_each = local.active_cohorts
 
   name = "sctp-vpc-${each.key}"
+  region = each.value.region
 
   enable_nat_gateway = true
   single_nat_gateway = true
