@@ -9,7 +9,8 @@ module "vpc" {
   enable_nat_gateway = true
   single_nat_gateway = true
 
-  azs = ["${each.value.region}a", "${each.value.region}b"]
+  enable_dns_hostnames    = true
+  map_public_ip_on_launch = true
 
   cidr = "10.${tonumber(replace(each.key, "ce", ""))}.0.0/16"
 
