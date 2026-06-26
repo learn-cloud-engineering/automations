@@ -6,12 +6,6 @@ module "vpc" {
   name   = "sctp-vpc-${each.key}"
   region = each.value.region
 
-  enable_nat_gateway = true
-  single_nat_gateway = true
-
-  enable_dns_hostnames    = true
-  map_public_ip_on_launch = true
-
   azs  = ["${each.value.region}a", "${each.value.region}b"]
   cidr = "10.${tonumber(replace(each.key, "ce", ""))}.0.0/16"
 
@@ -20,15 +14,27 @@ module "vpc" {
     "10.${tonumber(replace(each.key, "ce", ""))}.2.0/24",
   ]
 
+  # public subnet configurations
+  enable_dns_hostnames    = true
+  map_public_ip_on_launch = true
+
   private_subnets = [
     "10.${tonumber(replace(each.key, "ce", ""))}.11.0/24",
     "10.${tonumber(replace(each.key, "ce", ""))}.12.0/24",
   ]
 
+  # private subnet configurations
+  enable_nat_gateway = true
+  single_nat_gateway = true
+
   database_subnets = [
     "10.${tonumber(replace(each.key, "ce", ""))}.111.0/24",
     "10.${tonumber(replace(each.key, "ce", ""))}.112.0/24",
   ]
+
+  # database subnet configurations
+  create_database_subnet_group       = true
+  create_database_subnet_route_table = true
 
   tags = {
     Cohort         = "sctp-cloud-${each.key}"
