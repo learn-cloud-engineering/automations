@@ -71,19 +71,24 @@ alias terramate-run := terramate-run-tofu
 alias tm := terramate-run-tofu
 
 [group('stacks')]
-run-tofu-command command stack:
+[arg("stack", long="stack", short="s")]
+run-tf-command command stack="cohorts":
   {{tfcmd}} -chdir=admin/{{stack}} {{command}}
 
-alias terraform := run-tofu-command
-alias tofu := run-tofu-command
-alias tf := run-tofu-command
+alias terraform := run-tf-command
+alias tofu := run-tf-command
+alias tf := run-tf-command
 
-[group('cohorts')]
-[working-directory: 'admin/cohorts']
-view-outputs-for-cohorts:
-  {{tfcmd}} output -json
+[group('stacks')]
+view-outputs stack="cohorts":
+  just tf "output -json" --stack {{stack}}
 
-[group('cohorts')]
+[group('stacks')]
 [working-directory: 'admin/cohorts']
-student-info query:
-  just view-outputs-for-cohorts | jq -r --arg q "{{query}}" '.cohort_students.value | to_entries[] | .value | to_entries[] | select(.key == $q or .value.name == $q) | "Name:       \(.value.name)", "Username:   \(.key)", "Password:   \(.value.password)", "Login URL:  \(.value.login_url)"'
+save-outputs-cohorts:
+  just tf "output -json" --stack cohorts > outputs.json
+
+alias save-outputs := save-outputs-cohorts
+
+state stack="cohorts":
+  just tf "state list" --stack cohorts | grep -v -E '(^|\.)data\.' | wc -l
