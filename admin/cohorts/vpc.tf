@@ -3,7 +3,7 @@ module "vpc" {
   version  = "~> 6.6.0"
   for_each = local.active_cohorts
 
-  name = "sctp-vpc-${each.key}"
+  name   = "sctp-vpc-${each.key}"
   region = each.value.region
 
   enable_nat_gateway = true
@@ -12,6 +12,7 @@ module "vpc" {
   enable_dns_hostnames    = true
   map_public_ip_on_launch = true
 
+  azs  = ["${each.value.region}a", "${each.value.region}b"]
   cidr = "10.${tonumber(replace(each.key, "ce", ""))}.0.0/16"
 
   public_subnets = [
@@ -24,7 +25,7 @@ module "vpc" {
     "10.${tonumber(replace(each.key, "ce", ""))}.12.0/24",
   ]
 
-  intra_subnets = [
+  database_subnets = [
     "10.${tonumber(replace(each.key, "ce", ""))}.111.0/24",
     "10.${tonumber(replace(each.key, "ce", ""))}.112.0/24",
   ]
