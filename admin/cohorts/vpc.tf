@@ -7,11 +7,11 @@ module "vpc" {
   region = each.value.region
 
   azs  = ["${each.value.region}a", "${each.value.region}b"]
-  cidr = "10.${tonumber(replace(each.key, "ce", ""))}.0.0/16"
+  cidr = "10.${each.value.number}.0.0/16"
 
   public_subnets = [
-    "10.${tonumber(replace(each.key, "ce", ""))}.1.0/24",
-    "10.${tonumber(replace(each.key, "ce", ""))}.2.0/24",
+    "10.${each.value.number}.1.0/24",
+    "10.${each.value.number}.2.0/24",
   ]
 
   # public subnet configurations
@@ -19,8 +19,8 @@ module "vpc" {
   map_public_ip_on_launch = true
 
   private_subnets = [
-    "10.${tonumber(replace(each.key, "ce", ""))}.11.0/24",
-    "10.${tonumber(replace(each.key, "ce", ""))}.12.0/24",
+    "10.${each.value.number}.11.0/24",
+    "10.${each.value.number}.12.0/24",
   ]
 
   # private subnet configurations
@@ -28,8 +28,8 @@ module "vpc" {
   single_nat_gateway = true
 
   database_subnets = [
-    "10.${tonumber(replace(each.key, "ce", ""))}.111.0/24",
-    "10.${tonumber(replace(each.key, "ce", ""))}.112.0/24",
+    "10.${each.value.number}.111.0/24",
+    "10.${each.value.number}.112.0/24",
   ]
 
   # database subnet configurations

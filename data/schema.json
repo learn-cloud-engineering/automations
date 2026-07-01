@@ -8,13 +8,18 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["code", "name", "status", "region", "students"],
+        "required": ["code", "number", "name", "status", "region", "students"],
         "additionalProperties": false,
         "properties": {
           "code": {
             "type": "string",
             "pattern": "^ce[0-9]{2}$",
             "description": "Cohort code, e.g. ce88"
+          },
+          "number": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Numeric cohort identifier, e.g. 15"
           },
           "name": {
             "type": "string",

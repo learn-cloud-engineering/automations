@@ -2,6 +2,7 @@
 
 cohorts:
   - code: ce13
+    number: 13
     name: "Cohort 13"
     status: active
     region: us-east-1
@@ -80,6 +81,7 @@ cohorts:
         discord_username: "yq8781"
   
   - code: ce99
+    number: 99
     name: "Cohort 99"
     status: active
     region: us-east-1
