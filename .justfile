@@ -31,6 +31,8 @@ alias lint := format
 [working-directory: 'data']
 validate: format
   pipx run check-jsonschema --schemafile schema.json cohorts.yaml
+  just tf validate --stack policies
+  just tf validate --stack cohorts
 
 alias valid := validate
 alias check-data := validate
