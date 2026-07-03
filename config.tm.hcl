@@ -1,6 +1,8 @@
 globals {
-  region_tags = [for t in terramate.stack.tags : t if tm_startswith(t, "region/")]
-  region      = tm_length(global.region_tags) > 0 ? tm_split("/", global.region_tags[0])[1] : "ap-southeast-1"
+  region = {
+    sg = "ap-southeast-1"
+    us = "us-east-1"
+  }
 
   metadata = {
     owner      = "SCTP"
@@ -11,6 +13,12 @@ globals {
     hostname     = "sctp.scalr.io"
     organization = "env-v0p5uejtsf2d7pjp6"
     workspace    = terramate.stack.path.basename
+  }
+
+  default_tags = {
+    Owner          = "SCTP"
+    Source         = "https://github.com/su-ntu-ctp/cloud-cohorts"
+    NukeProtection = "Enabled"
   }
 }
 
@@ -31,13 +39,19 @@ generate_hcl "versions.tf" {
 generate_hcl "providers.tf" {
   content {
     provider "aws" {
-      region = global.region
+      region = global.region.sg
 
       default_tags {
-        tags = {
-          Owner  = global.metadata.owner
-          Source = global.metadata.source_url
-        }
+        tags = global.default_tags
+      }
+    }
+
+    provider "aws" {
+      alias  = "us"
+      region = global.region.us
+
+      default_tags {
+        tags = global.default_tags
       }
     }
   }

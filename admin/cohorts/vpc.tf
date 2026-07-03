@@ -37,8 +37,7 @@ module "vpc" {
   create_database_subnet_route_table = true
 
   tags = {
-    Cohort         = "sctp-cloud-${each.key}"
-    Region         = each.value.region
-    NukeProtection = "Enabled"
+    Cohort = "sctp-cloud-${each.key}"
+    Region = each.value.region
   }
 }
