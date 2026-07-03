@@ -39,5 +39,6 @@ module "vpc" {
   tags = {
     Cohort = "sctp-cloud-${each.key}"
     Region = each.value.region
+    NukeProtection = "Enabled"
   }
 }
