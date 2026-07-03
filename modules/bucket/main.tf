@@ -49,7 +49,7 @@ data "aws_iam_policy_document" "deny_bucket_deletion" {
 
 resource "aws_s3_bucket_policy" "this" {
   bucket = aws_s3_bucket.this.id
-  policy = data.aws_iam_policy_document.deny_bucket_deletion.id
+  policy = data.aws_iam_policy_document.deny_bucket_deletion.json
 
   depends_on = [
     aws_s3_bucket.this,
