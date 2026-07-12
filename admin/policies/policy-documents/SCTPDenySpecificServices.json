@@ -22,7 +22,8 @@
         "budgets:*",
         "ce:*",
         "billing:*",
-        "workspaces:*"
+        "workspaces:*",
+        "pricingplanmanager:*"
       ],
       "Resource": "*"
     }
