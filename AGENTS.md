@@ -1,5 +1,7 @@
 # Cloud cohort automations — agent reference
 
+OpenTofu-based infrastructure (compatible with Terraform providers).
+
 ## Project structure
 
 ```txt
@@ -10,7 +12,8 @@
 │   ├── cohorts.yaml   ← single source of truth for all cohort data
 │   └── schema.json    ← JSON Schema 2020-12 for cohorts.yaml
 ├── modules/
-│   └── cohort/        ← Terraform module (group + users + policy attachment)
+│   ├── bucket/        ← S3 bucket per cohort
+│   └── cohort/        ← OpenTofu module (group + users + policy attachment)
 └── .justfile          ← available commands (run `just --list`)
 ```
 
@@ -28,11 +31,11 @@
 - **Do not hardcode policy names.** Use `fileset` to discover JSON files dynamically.
 - **Cohort IAM policies are discovered from `admin/policies/policy-documents/`** via `fileset("...", "*.json")` and attached via `aws_iam_group_policy_attachment`.
 - **Cohort status**: `active` (resources created) or `inactive` (resources destroyed).
-- **Adding a new cohort**: add entry to `data/cohorts.yaml` with `status: active`, then run `just cohorts-apply`.
-- **Removing a cohort**: set `status: inactive` in `data/cohorts.yaml`, run `just cohorts-apply`. Or remove the entry entirely.
-- **Validate the YAML**: `just cohorts-validate-data` (checks against `data/schema.json`).
+- **Adding a new cohort**: add entry to `data/cohorts.yaml` with `status: active`, then run `just tf apply`.
+- **Removing a cohort**: set `status: inactive` in `data/cohorts.yaml`, run `just tf apply`. Or remove the entry entirely.
+- **Validate the YAML**: `just validate-data` (checks against `data/schema.json`).
 
-## Terraform stacks
+## OpenTofu stacks
 
 | Stack              | Purpose                    | Tags               |
 | ------------------ | -------------------------- | ------------------ |
